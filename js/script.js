@@ -76,6 +76,8 @@ function draw() {
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
+
+
 function keyDownHandler(e) {
     if(e.keyCode == 39) {
         rightKeyPressed = true;

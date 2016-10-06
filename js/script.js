@@ -6,30 +6,32 @@ function init () {
   var canvas = document.getElementById('myCanvas')
   var ctx = canvas.getContext('2d')
 
-  // defining start point and speed of ball
+  // defining startpoint & position of the ball
   var x = canvas.width / 2
   var y = canvas.height - 30
-  var dx = 2
-  var dy = -2
+  // defines the speed of the ball every time the canvas is drawn
+  var dx = 3
+  var dy = -3
 
   // collison detection
-  var ballRadius = 10
+  var ballRadius = 7
 
   // paddle to hit the ball
-  var paddleHeight = 10
-  var paddleWidth = 75
+  var paddleHeight = 30
+  var paddleWidth = 100
   var paddleStart = (canvas.width - paddleWidth) / 2
   // ? get a better understanding of paddleStart's purpose
 
   // Key press functionality
+
   var rightKeyPressed = false
   var leftKeyPressed = false
 
   // Key brick defintions
 
   var brickTotalRows = 3
-  var brickTotalColumns = 5
-  var brickHeight = 20
+  var brickTotalColumns = 8
+  var brickHeight = 30
   var brickWidth = 75
   var brickPadding = 10
   var brickTopMargin = 30
@@ -44,8 +46,29 @@ function init () {
       bricks[c][r] = { x: 0, y: 0, status: 1, }
     }
   }
+// score functionality
+  var score = 0;
 
-  // ? Understand key press functionality
+// lives functionality
+var lives = 3;
+
+// image list
+
+var img = {};
+img.tennisBall = new Image();
+img.tennisBall.src = "../images/tennisball.png"
+var tennisBall = img.tennisBall;
+
+img.angryCat = new Image();
+img.angryCat.src = "../images/angrycat2.png"
+var angryCat = img.angryCat;
+
+img.dogPaddle = new Image();
+img.dogPaddle.src = "../images/dach2.png"
+var dogPaddle = img.dogPaddle;
+
+
+  // Key press functionality
   document.addEventListener('keydown', keyDownHandler)
   document.addEventListener('keyup', keyUpHandler)
 
@@ -74,25 +97,34 @@ function init () {
             if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
                 dy = -dy;
                 b.status = 0;
+                score ++ ;
             }
-            }
+          }
         }
     }
 }
 
+function drawScore () {
+  ctx.font = '14px Helvetica';
+  ctx.fillStyle = 'white';
+  ctx.fillText("Score: "+score + " evil kitties defeated!", 8, 20);
+}
   // functions of the game
   function drawBall () {
     ctx.beginPath()
-    ctx.arc(x, y, ballRadius, 0, Math.PI * 2)
-    ctx.fillStyle = '#0095DD'
+    // ctx.arc(x, y, ballRadius, 0, Math.PI * 2)
+    ctx.drawImage(tennisBall, x - ballRadius, y - ballRadius , ballRadius * 2, ballRadius * 2);
+    // ctx.fillStyle = '#0095DD'
     ctx.fill()
     ctx.closePath()
   }
 
   function drawPaddle () {
     ctx.beginPath()
-    ctx.rect(paddleStart, canvas.height - paddleHeight, paddleWidth, paddleHeight)
-    ctx.fillStyle = '#FF0000'
+    // ctx.rect(paddleStart, canvas.height - paddleHeight, paddleWidth, paddleHeight)
+    ctx.drawImage(dogPaddle, paddleStart, canvas.height - paddleHeight, paddleWidth, paddleHeight)
+
+    // ctx.fillStyle = '#FF0000'
     ctx.fill()
     ctx.closePath()
   }
@@ -106,8 +138,9 @@ function init () {
              bricks[c][r].x = brickX
              bricks[c][r].y = brickY
              ctx.beginPath()
-             ctx.rect(brickX, brickY, brickWidth, brickHeight)
-             ctx.fillStyle = '#0095DD'
+            //  ctx.rect(brickX, brickY, brickWidth, brickHeight)
+             ctx.drawImage(angryCat, brickX, brickY, brickWidth, brickHeight)
+            //  ctx.fillStyle = '#0095DD'
              ctx.fill()
              ctx.closePath()
          }
@@ -115,13 +148,20 @@ function init () {
     }
   }
 
-  console.log('bricks are ', bricks);
+  function drawLives() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "white";
+    ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+}
+
 
   function draw () {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     drawBricks()
     drawBall()
     drawPaddle()
+    drawScore()
+    drawLives()
     collisionDetection()
     x += dx
     y += dy
@@ -151,8 +191,19 @@ function init () {
       if (x > paddleStart && x < paddleStart + paddleWidth) {
         dy = -dy
       } else {
-        // alert('Game over!')
-        // document.location.reload()
+               lives--;
+               if(!lives) {
+               alert('Game over!')
+               document.location.reload()
+
+             } else {
+                      x = canvas.width/2;
+                      y = canvas.height-30;
+                      dx = 3;
+                      dy = -3;
+                      paddleStart = (canvas.width-paddleWidth)/2;
+             }
+
       }
     }
   }

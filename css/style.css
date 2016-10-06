@@ -1,2 +1,16 @@
 * { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
+
+#myCanvas {
+      margin-top: 150px;
+      display: block;
+      background-image: url("../images/gamebackground.png");
+      background-size: cover;
+      width: inherit;
+
+}
+
+body {
+      background-image: url("../images/rowofhouses3.png");
+      background-size: cover;
+      }

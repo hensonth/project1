@@ -183,7 +183,7 @@ function drawScore () {
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
       dx = -dx
     }
-    // Setting of collison course with paddle
+    // Setting of collison course with paddle, lives and restarting if ball goes out
 
     if (y + dy < ballRadius) {
       dy = -dy

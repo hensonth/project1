@@ -56,15 +56,15 @@ var lives = 3;
 
 var img = {};
 img.tennisBall = new Image();
-img.tennisBall.src = "../images/tennisball.png"
+img.tennisBall.src = "images/tennisball.png"
 var tennisBall = img.tennisBall;
 
 img.angryCat = new Image();
-img.angryCat.src = "../images/angrycat2.png"
+img.angryCat.src = "images/angrycat2.png"
 var angryCat = img.angryCat;
 
 img.dogPaddle = new Image();
-img.dogPaddle.src = "../images/dach2.png"
+img.dogPaddle.src = "images/dach2.png"
 var dogPaddle = img.dogPaddle;
 
 
